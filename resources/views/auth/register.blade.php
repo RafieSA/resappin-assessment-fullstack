@@ -20,44 +20,62 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form action="{{ route('register.process') }}" method="POST">
-                                            @csrf
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" name="name" id="inputFirstName" type="text" placeholder="Enter your first name" />
-                                                        <label for="inputFirstName">First name</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating">
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
-                                                        <label for="inputLastName">Last name</label>
-                                                    </div>
+                                    <form action="{{ route('register.process') }}" method="POST">
+                                        @csrf
+                                        <div class="row mb-3">
+                                            {{-- First Name --}}
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control @error('name') is-invalid @enderror" name="name" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{ old('name') }}" />
+                                                    <label for="inputFirstName">First name <span class="text-danger">*</span></label>
+                                                    @error('name')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Create a password" />
-                                                        <label for="inputPassword">Password</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" name="password_confirmation" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
-                                                        <label for="inputPasswordConfirm">Confirm Password</label>
-                                                    </div>
+                                            {{-- Last Name Optional --}}
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
+                                                    <label for="inputLastName">Last name</label>
                                                 </div>
                                             </div>
-                                            <div class="mt-4 mb-0">
-                                                <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create Account</button></div>
+                                        </div>
+
+                                        {{-- Email --}}
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" type="email" placeholder="name@example.com" value="{{ old('email') }}" />
+                                            <label for="inputEmail">Email address <span class="text-danger">*</span></label>
+                                            @error('email')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            {{-- Password --}}
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control @error('password') is-invalid @enderror" name="password" id="inputPassword" type="password" placeholder="Create a password" />
+                                                    <label for="inputPassword">Password <span class="text-danger">*</span></label>
+                                                    @error('password')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </form>
+                                            {{-- Confirm Password --}}
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" name="password_confirmation" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
+                                                    <label for="inputPasswordConfirm">Confirm Password <span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Tombol Submit --}}
+                                        <div class="mt-4 mb-0">
+                                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create Account</button></div>
+                                        </div>
+                                    </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a href="login.html">Have an account? Go to login</a></div>

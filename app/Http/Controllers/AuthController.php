@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -22,7 +23,25 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed', // confirmed cek input password_confirmation
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase() // Harus ada Huruf Besar & Kecil
+                    ->numbers()   // Harus ada Angka
+                    ->symbols()   // Harus ada Simbol (@$!%*?&)
+                    ->uncompromised() // Cek apakah password pernah bocor di internet
+            ],
+        ], [
+            // Custom Error Messages
+            'name.required' => 'Nama wajib diisi!',
+            'email.required' => 'Email jangan kosong.',
+            'email.email' => 'Format email salah, cek lagi.',
+            'email.unique' => 'Email ini udah dipake orang lain.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
         // 2. Simpan User ke Database
