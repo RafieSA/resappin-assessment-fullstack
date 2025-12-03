@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BarangController;
 
 // Route Tamu (Guest) - Cuma bisa diakses kalau belum login
 Route::middleware('guest')->group(function () {
@@ -18,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('layouts.admin');
     })->name('dashboard');
+
+    // Route Master Barang
+    Route::resource('barang', BarangController::class);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
