@@ -39,15 +39,23 @@
                                         @endif
 
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" value="{{ old('email') }}" />
+                                            <input class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" type="email" placeholder="name@example.com" value="{{ old('email') }}" />
                                             <label for="inputEmail">Email address <span class="text-danger">*</span></label>
+                                            @error('email')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
-                                            <label for="inputPassword">Password <span class="text-danger">*</span></label>
+
+                                        <div class="input-group mb-3">
+                                            <div class="form-floating flex-grow-1">
+                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
+                                                <label for="inputPassword">Password <span class="text-danger">*</span></label>
+                                            </div>
+                                            <span class="input-group-text" onclick="togglePassword('inputPassword', 'toggleIcon')" style="cursor: pointer;">
+                                                <i class="fas fa-eye" id="toggleIcon"></i>
+                                            </span>
                                         </div>
                                         
-                                        {{-- Sisanya sama --}}
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" name="remember" id="inputRememberPassword" type="checkbox" value="" />
                                             <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
@@ -57,9 +65,25 @@
                                             <button type="submit" class="btn btn-primary">Login</button>
                                         </div>
                                     </form>
+                                    <script>
+                                        function togglePassword(inputId, iconId) {
+                                            const passwordInput = document.getElementById(inputId);
+                                            const icon = document.getElementById(iconId);
+                                            
+                                            if (passwordInput.type === "password") {
+                                                passwordInput.type = "text";
+                                                icon.classList.remove("fa-eye");
+                                                icon.classList.add("fa-eye-slash");
+                                            } else {
+                                                passwordInput.type = "password";
+                                                icon.classList.remove("fa-eye-slash");
+                                                icon.classList.add("fa-eye");
+                                            }
+                                        }
+                                    </script>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="{{ route('register') }}">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>

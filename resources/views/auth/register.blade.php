@@ -54,19 +54,29 @@
                                         <div class="row mb-3">
                                             {{-- Password --}}
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control @error('password') is-invalid @enderror" name="password" id="inputPassword" type="password" placeholder="Create a password" />
+                                                <div class="position-relative mb-3 mb-md-0">
                                                     <label for="inputPassword">Password <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input class="form-control @error('password') is-invalid @enderror" name="password" id="inputPassword" type="password" placeholder="Password" />
+                                                        <span class="input-group-text" onclick="togglePassword('inputPassword', 'togglePasswordIcon')" style="cursor: pointer;">
+                                                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                                        </span>
+                                                    </div>
                                                     @error('password')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
                                             {{-- Confirm Password --}}
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" name="password_confirmation" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
+                                                <div class="position-relative mb-3 mb-md-0">
                                                     <label for="inputPasswordConfirm">Confirm Password <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" name="password_confirmation" id="inputPasswordConfirm" type="password" placeholder="Confirm Password" />
+                                                        <span class="input-group-text" onclick="togglePassword('inputPasswordConfirm', 'toggleConfirmPasswordIcon')" style="cursor: pointer;">
+                                                            <i class="fas fa-eye" id="toggleConfirmPasswordIcon"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,9 +86,25 @@
                                             <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Create Account</button></div>
                                         </div>
                                     </form>
+                                    <script>
+                                        function togglePassword(inputId, iconId) {
+                                            const passwordInput = document.getElementById(inputId);
+                                            const icon = document.getElementById(iconId);
+
+                                            if (passwordInput.type === "password") {
+                                                passwordInput.type = "text";
+                                                icon.classList.remove("fa-eye");
+                                                icon.classList.add("fa-eye-slash");
+                                            } else {
+                                                passwordInput.type = "password";
+                                                icon.classList.remove("fa-eye-slash");
+                                                icon.classList.add("fa-eye");
+                                            }
+                                        }
+                                    </script>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="login.html">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="{{ route('login') }}">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>
