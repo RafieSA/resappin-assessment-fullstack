@@ -36,7 +36,7 @@ class BarangController extends Controller
         // 3. Cek kalau ada upload gambar
         if ($request->hasFile('gambar')) {
             // Simpan gambar ke folder 'public/barang_images'
-            $path = $request->file('gambar')->store('public/barang_images');
+            $path = $request->file('gambar')->store('barang_images', 'public');
             $data['gambar'] = $path; // Masukin path gambar ke data
         }
 
